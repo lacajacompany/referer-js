@@ -18,7 +18,6 @@
       }
 
       document.cookie = name + "=" + (value || "") + expires + "; path=/;domain=contery.com";
-
     }
 
     function getCookie(name) {
@@ -27,31 +26,37 @@
 
       for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1, c.length);
+        }
+
+        if (c.indexOf(nameEQ) == 0) {
+          return c.substring(nameEQ.length, c.length);
+        }
       }
 
       return null;
     }
 
-    var queryParams = new URLSearchParams(window.location.search)
+    var queryParams = new URLSearchParams(window.location.search);
 
     var utmKeys = [
       'utm_source',
       'utm_medium',
       'utm_campaign',
       'utm_channel'
-    ]
+    ];
 
     // Store utm query params in cookies
     utmKeys.forEach(key => {
       if (!getCookie(key) && queryParams.has(key)) {
         setCookie(key, queryParams.get(key), 90);
       }
-    })
+    });
 
     if (!getCookie('referer_url')) {
-      var referer_url = document.referrer
+      var referer_url = document.referrer;
 
       if (!referer_url) {
         return
